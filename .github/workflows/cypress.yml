@@ -39,8 +39,10 @@ jobs:
           name: junit-test-results
           path: cypress/reports/test-results-*.xml
 
-      - name: Publish JUnit test results to GitHub Actions
+      - name: Upload Mochawesome test results to GitHub Actions
         if: always()
-        uses: github-action/junit-report@v2
+        uses: actions/upload-artifact@v4
         with:
-          report_path: cypress/reports/test-results-*.xml
+          name: mochawesome-report
+          path: cypress/reports/mochawesome.html
+          retention-days: 14
