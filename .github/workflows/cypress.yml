@@ -2,9 +2,13 @@ name: Cypress Tests
 
 on:
   push:
-    branches: [main, master]
+    branches:
+      - main
+      - master
   pull_request:
-    branches: [main, master]
+    branches:
+      - main
+      - master
   workflow_dispatch:
 
 jobs:
@@ -13,9 +17,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-      - uses: actions/setup-node@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
         with:
           node-version: 18
 
@@ -34,6 +40,7 @@ jobs:
         run: npx cypress run --browser chrome --headless
 
       - name: Upload JUnit test results to GitHub Actions
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: junit-test-results
