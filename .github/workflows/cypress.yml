@@ -52,7 +52,7 @@ jobs:
           cat cypress/reports/*.json | head -n 20
 
       - name: Merge Mochawesome JSON reports
-        run: npx mochawesome-merge cypress/reports/*.json > cypress/reports/merged-report.json
+        run: npx mochawesome-merge cypress/reports/mochawesome_*.json > cypress/reports/merged-report.json
 
       - name: List content of merged report
         run: cat cypress/reports/merged-report.json
