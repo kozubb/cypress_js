@@ -41,11 +41,23 @@ jobs:
           npx cypress run --browser chrome --headless --reporter mochawesome --reporter-options reportDir=cypress/reports,html=true,json=true \
           --reporter mocha-junit-reporter --reporter-options mochaFile=cypress/reports/test-results-[hash].xml
 
+      - name: List files before merging JSON reports
+        run: ls -lh cypress/reports
+
+      - name: Debug the content of JSON files
+        run: cat cypress/reports/*.json
+
       - name: Merge Mochawesome JSON reports
         run: npx mochawesome-merge cypress/reports/*.json > cypress/reports/merged-report.json
 
+      - name: List content of merged report
+        run: cat cypress/reports/merged-report.json
+
       - name: Generate HTML report from merged JSON
         run: npx marge cypress/reports/merged-report.json --reportDir=cypress/reports
+
+      - name: List files after merging and HTML report generation
+        run: ls -lh cypress/reports
 
       - name: Upload Mochawesome HTML report to GitHub Actions
         if: always()
