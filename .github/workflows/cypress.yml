@@ -37,7 +37,9 @@ jobs:
         run: npm ci
 
       - name: Run Cypress tests in Chrome
-        run: npx cypress run --browser chrome --headless --reporter mocha-junit-reporter --reporter-options mochaFile=cypress/reports/test-results-[hash].xml
+        run: npx cypress run --browser chrome --headless \
+          --reporter mochawesome --reporter-options reportDir=cypress/reports,html=true,json=true \
+          --reporter mocha-junit-reporter --reporter-options mochaFile=cypress/reports/test-results-[hash].xml
 
       - name: Upload JUnit test results to GitHub Actions Test Summary
         if: always()
