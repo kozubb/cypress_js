@@ -36,33 +36,18 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run Cypress tests in Chrome
+      - name: Run Cypress tests in Chrome (JUnit)
         run: |
-          npx cypress run --browser chrome --headless --reporter mochawesome --reporter-options reportDir=cypress/reports,html=true,json=true
+          npx cypress run --browser chrome --headless --reporter mocha-junit-reporter --reporter-options mochaFile=cypress/reports/test-results-[hash].xml
 
-      - name: List files before merging JSON reports
-        run: ls -lh cypress/reports
+      - name: Upload JUnit test results to GitHub Actions
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: junit-test-results
+          path: cypress/reports/test-results-*.xml
 
-      - name: Debug the content of JSON files
-        run: |
-          echo "Listing all JSON files in the reports folder:"
-          ls cypress/reports/*.json
-          echo "Showing the content of the first JSON file:"
-          cat cypress/reports/*.json | head -n 20
-
-      - name: Merge Mochawesome JSON reports
-        run: npx mochawesome-merge cypress/reports/mochawesome_*.json > cypress/reports/merged-report.json
-
-      - name: List content of merged report
-        run: cat cypress/reports/merged-report.json
-
-      - name: Generate HTML report from merged JSON
-        run: npx marge cypress/reports/merged-report.json --reportDir=cypress/reports
-
-      - name: List files after merging and HTML report generation
-        run: ls -lh cypress/reports
-
-      - name: Upload Mochawesome HTML report to GitHub Actions
+      - name: Upload Mochawesome test results
         if: always()
         uses: actions/upload-artifact@v4
         with:
