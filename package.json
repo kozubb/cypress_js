@@ -18,5 +18,8 @@
     "cypress-multi-reporters": "^2.0.5",
     "mochawesome": "^7.1.4",
     "mochawesome-merge": "^5.1.0"
+  },
+  "dependencies": {
+    "marge": "^1.0.1"
   }
 }
