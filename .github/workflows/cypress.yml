@@ -37,7 +37,7 @@ jobs:
         run: npm ci
 
       - name: Run Cypress tests in Chrome
-        run:
+        run: |
           npx cypress run --browser chrome --headless --reporter mochawesome --reporter-options reportDir=cypress/reports,html=true,json=true \
           --reporter mocha-junit-reporter --reporter-options mochaFile=cypress/reports/test-results-[hash].xml
 
@@ -45,7 +45,11 @@ jobs:
         run: ls -lh cypress/reports
 
       - name: Debug the content of JSON files
-        run: cat cypress/reports/*.json
+        run: |
+          echo "Listing all JSON files in the reports folder:"
+          ls cypress/reports/*.json
+          echo "Showing the content of the first JSON file:"
+          cat cypress/reports/*.json | head -n 20
 
       - name: Merge Mochawesome JSON reports
         run: npx mochawesome-merge cypress/reports/*.json > cypress/reports/merged-report.json
