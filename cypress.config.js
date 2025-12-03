@@ -19,13 +19,19 @@ module.exports = defineConfig({
     responseTimeout: 60000,
     screenshotOnRunFailure: true,
     video: false,
-    reporter: "mochawesome",
+    reporters: ["mochawesome", "junit"],
     reporterOptions: {
-      reportDir: "cypress/reports",
-      quiet: true,
-      overwrite: false,
-      html: true,
-      json: true,
+      mochawesomeReporterOptions: {
+        reportDir: "cypress/reports",
+        quiet: true,
+        overwrite: false,
+        html: true,
+        json: true,
+      },
+      junitReporterOptions: {
+        mochaFile: "cypress/reports/test-results-[hash].xml",
+        toConsole: true,
+      },
     },
   },
 });
