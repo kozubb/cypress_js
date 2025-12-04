@@ -1,5 +1,4 @@
 const { defineConfig } = require("cypress");
-const allureWriter = require("@shelex/cypress-allure-plugin/writer");
 
 module.exports = defineConfig({
   e2e: {
@@ -20,8 +19,9 @@ module.exports = defineConfig({
     responseTimeout: 60000,
     screenshotOnRunFailure: true,
     video: false,
-    reporters: [[allureWriter]],
+    reporter: "cypress-multi-reporters",
     reporterOptions: {
+      reporterEnabled: "mochawesome,cypress-junit-reporter",
       mochawesomeReporterOptions: {
         reportDir: "cypress/reports",
         quiet: true,
@@ -29,14 +29,9 @@ module.exports = defineConfig({
         html: true,
         json: true,
       },
-    },
-    env: {
-      allure: true,
-      allureReuseAfterSpec: true,
-    },
-    setupNodeEvents(on, config) {
-      allureWriter(on, config);
-      return config;
+      cypressJunitReporterReporterOptions: {
+        mochaFile: "cypress/reports/test-results-[hash].xml",
+      },
     },
   },
 });

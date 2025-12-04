@@ -23,7 +23,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 20.x
+          node-version: 22.x
 
       - name: Cache npm dependencies
         uses: actions/cache@v3
@@ -36,18 +36,20 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run Cypress tests with Allure reporter
-        run: |
-          npx cypress run --browser chrome --headless --reporter @shelex/cypress-allure-plugin
+      - name: Run Cypress tests in Chrome
+        run: npx cypress run --browser chrome --headless --reporter mocha-junit-reporter --reporter-options mochaFile=cypress/reports/test-results-[hash].xml
 
-      - name: Generate Allure report
-        run: |
-          npx allure generate --clean
-
-      - name: Upload Allure report as an artifact
+      - name: Upload JUnit test results to GitHub Actions Test Summary
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: allure-report
-          path: allure-report
+          name: junit-test-results
+          path: cypress/reports/test-results-*.xml
+
+      - name: Upload Mochawesome test results to GitHub Actions
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mochawesome-report
+          path: cypress/reports/mochawesome.html
           retention-days: 14
