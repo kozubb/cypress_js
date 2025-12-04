@@ -23,7 +23,7 @@ module.exports = defineConfig({
     reporterOptions: {
       reporterEnabled: "mochawesome,cypress-junit-reporter",
       mochawesomeReporterOptions: {
-        reportDir: "cypress/reports/mocha",
+        reportDir: "cypress/reports/mocharepors",
         quiet: true,
         overwrite: false,
         html: false,
