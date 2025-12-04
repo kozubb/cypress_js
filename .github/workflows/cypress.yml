@@ -39,6 +39,12 @@ jobs:
       - name: Run Cypress tests in Chrome
         run: npx cypress run --browser chrome --headless --reporter mocha-junit-reporter --reporter-options mochaFile=cypress/reports/test-results-[hash].xml
 
+      - name: Generate Mochawesome report
+        run: |
+          mkdir -p cypress/reports/mochawesome
+          npx mochawesome-merge cypress/reports/*.json > cypress/reports/mochawesome-report.json
+          npx mochawesome-report-generator cypress/reports/mochawesome-report.json --reportDir cypress/reports
+
       - name: Upload JUnit test results to GitHub Actions Test Summary
         if: always()
         uses: actions/upload-artifact@v4
@@ -51,5 +57,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: mochawesome-report
-          path: cypress/reports/mochawesome.html
+          path: cypress/reports/mochawesome-report.html
           retention-days: 14
