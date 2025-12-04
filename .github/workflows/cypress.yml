@@ -37,13 +37,13 @@ jobs:
         run: npm ci
 
       - name: Run Cypress tests
-        run: npm run test # Uruchamia testy (w tym 'scripts' i 'posttest')
+        run: npm run test
 
       - name: Combine Mochawesome JSON reports
-        run: npm run combine-reports # Łączenie raportów JSON w jeden
+        run: npm run combine-reports
 
       - name: Generate Mochawesome HTML report
-        run: npm run generate-report # Generowanie HTML z połączonych raportów
+        run: npm run generate-report
 
       - name: Upload JUnit test results to GitHub Actions Test Summary
         if: always()

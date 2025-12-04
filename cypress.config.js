@@ -29,7 +29,7 @@ module.exports = defineConfig({
         html: false,
         json: true,
       },
-      cypressJunitReporterReporterOptions: {
+      cypressJunitReporterOptions: {
         mochaFile: "cypress/reports/test-results-[hash].xml",
       },
     },
