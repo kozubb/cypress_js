@@ -36,21 +36,18 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run Cypress tests in Chrome (JUnit)
+      - name: Run Cypress tests with Allure reporter
         run: |
-          npx cypress run --browser chrome --headless --reporter mocha-junit-reporter --reporter-options mochaFile=cypress/reports/test-results-[hash].xml
+          npx cypress run --browser chrome --headless --reporter @shelex/cypress-allure-plugin
 
-      - name: Upload JUnit test results to GitHub Actions
+      - name: Generate Allure report
+        run: |
+          npx allure generate --clean
+
+      - name: Upload Allure report as an artifact
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: junit-test-results
-          path: cypress/reports/test-results-*.xml
-
-      - name: Upload Mochawesome test results
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: mochawesome-report
-          path: cypress/reports/mochawesome.html
+          name: allure-report
+          path: allure-report
           retention-days: 14
