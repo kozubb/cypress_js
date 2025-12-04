@@ -39,6 +39,13 @@ jobs:
       - name: Run Cypress tests
         run: npm run test
 
+      - name: Check if JSON files exist
+        run: |
+          if [ ! -f cypress/reports/mocha/*.json ]; then
+            echo "No JSON reports found!";
+            exit 1;
+          fi
+
       - name: Combine Mochawesome JSON reports
         run: npm run combine-reports
 
@@ -57,5 +64,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: mochawesome-report
-          path: cypress/reports/mocha/report.html
+          path: cypress/reports/mochareports/report.html
           retention-days: 14
