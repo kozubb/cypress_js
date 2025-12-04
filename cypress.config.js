@@ -32,6 +32,11 @@ module.exports = defineConfig({
     },
     env: {
       allure: true,
+      allureReuseAfterSpec: true,
+    },
+    setupNodeEvents(on, config) {
+      allureWriter(on, config);
+      return config;
     },
   },
 });
