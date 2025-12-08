@@ -6,12 +6,12 @@
   "scripts": {
     "cy:run": "npx cypress run",
     "cy:open:chrome": "npx cypress open --browser chrome",
-    "cy:run:chrome": "npx cypress run --browser chrome --headless",
+    "cy:run:chrome": "cypress run --browser chrome --headless",
     "scripts": "cypress run",
     "combine-reports": "mkdir -p cypress/reports/mochareports && mochawesome-merge 'cypress/reports/mocha/*.json' > cypress/reports/mochareports/report.json",
     "generate-report": "mkdir -p cypress/reports/mochareports && marge cypress/reports/mochareports/report.json -f report -o cypress/reports/mochareports --inline",
     "posttest": "npm run combine-reports && npm run generate-report",
-    "test": "npm run scripts || npm run posttest"
+    "test": "npm run cy:run:chrome || npm run posttest"
   },
   "author": "",
   "license": "ISC",
