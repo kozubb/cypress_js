@@ -16,6 +16,9 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
 
+    env:
+      TERM: xterm-256color
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -64,6 +67,4 @@ jobs:
         with:
           report-path: "./ctrf/*.json"
           github-report: true
-          summary-delta-report: true
-          flaky-rate-report: true
         if: always()
