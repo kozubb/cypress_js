@@ -59,3 +59,10 @@ jobs:
           name: mochawesome-report
           path: cypress/reports/mochareports/report.html
           retention-days: 14
+
+      - name: Publish Test Report
+        uses: ctrf-io/github-test-reporter@v1
+        with:
+          report-path: "cypress/reports/mocha/*.json"
+          github-report: true
+        if: always()
