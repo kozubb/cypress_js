@@ -66,5 +66,4 @@ jobs:
           github-report: true
           summary-delta-report: true
           flaky-rate-report: true
-          previous-results-report: true
         if: always()
