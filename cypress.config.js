@@ -1,4 +1,5 @@
 const { defineConfig } = require("cypress");
+const { GenerateCtrfReport } = require("cypress-ctrf-json-reporter");
 
 module.exports = defineConfig({
   e2e: {
@@ -21,7 +22,7 @@ module.exports = defineConfig({
     video: false,
     reporter: "cypress-multi-reporters",
     reporterOptions: {
-      reporterEnabled: "mochawesome,cypress-junit-reporter",
+      reporterEnabled: "mochawesome",
       mochawesomeReporterOptions: {
         reportDir: "cypress/reports/mocha",
         quiet: true,
@@ -32,6 +33,11 @@ module.exports = defineConfig({
       cypressJunitReporterOptions: {
         mochaFile: "cypress/reports/test-results-[hash].xml",
       },
+    },
+    setupNodeEvents(on, config) {
+      new GenerateCtrfReport({
+        on,
+      });
     },
   },
 });
