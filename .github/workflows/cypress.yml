@@ -2,9 +2,13 @@ name: Cypress Tests
 
 on:
   push:
-    branches: [main, master]
+    branches:
+      - main
+      - master
   pull_request:
-    branches: [main, master]
+    branches:
+      - main
+      - master
   workflow_dispatch:
 
 jobs:
@@ -32,40 +36,26 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run Cypress tests with CTRF + Mochawesome reporters
-        run: |
-          npx cypress run \
-            --reporter mochawesome \
-            --reporter-options reportDir=cypress/reports/mochawesome,overwrite=false,html=false,json=true \
-            --reporter ctrf-mocha-reporter \
-            --reporter-options outputDir=cypress/reports/ctf
+      - name: Run Cypress tests
+        run: npm run test
 
-      - name: Check if CTRF JSON exists
+      - name: Check if JSON files exist
         run: |
-          if ls cypress/reports/ctf/*.json 1> /dev/null 2>&1; then
-            echo "CTRF reports found";
-          else
-            echo "No CTRF reports found!";
+          if [ ! -f cypress/reports/mocha/*.json ]; then
+            echo "No JSON reports found!";
             exit 1;
           fi
 
-      - name: Publish CTRF report (GitHub Test Reporter)
-        uses: ctrf-io/github-test-reporter@v1
-        with:
-          report-path: "cypress/reports/ctf/*.json"
-          github-report: true
-        if: always()
-
-      - name: Combine Mochawesome JSON files
-        run: npx mochawesome-merge cypress/reports/mochawesome/*.json > cypress/reports/mochawesome/mochawesome.json
+      - name: Combine Mochawesome JSON reports
+        run: npm run combine-reports
 
       - name: Generate Mochawesome HTML report
-        run: npx marge cypress/reports/mochawesome/mochawesome.json --reportDir cypress/reports/mochareports
+        run: npm run generate-report
 
       - name: Upload Mochawesome HTML report to GitHub Actions
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: mochawesome-report
-          path: cypress/reports/mochareports
+          path: cypress/reports/mochareports/report.html
           retention-days: 14
