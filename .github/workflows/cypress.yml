@@ -37,7 +37,7 @@ jobs:
         run: npm ci
 
       - name: Run Cypress tests
-        run: npm run test
+        run: npm run cy:run:chrome
 
       - name: Check if JSON files exist
         run: |
@@ -65,7 +65,6 @@ jobs:
           report-path: "./ctrf/*.json"
           github-report: true
           summary-delta-report: true
-          insights-report: true
           flaky-rate-report: true
           previous-results-report: true
         if: always()
