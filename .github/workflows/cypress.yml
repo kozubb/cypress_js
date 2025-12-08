@@ -64,4 +64,8 @@ jobs:
         with:
           report-path: "./ctrf/*.json"
           github-report: true
+          summary-delta-report: true
+          insights-report: true
+          flaky-rate-report: true
+          previous-results-report: true
         if: always()
