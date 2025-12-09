@@ -1,9 +1,9 @@
 describe("Login into account", () => {
   // Test data - endpoint, credentials, and messages
   const endpoint = "https://practice.qabrains.com/";
-  const email = "qa_testers@qabrains.com"; // Email for login
-  const password = "Password123"; // Password for login
-  const loginSuccessfulMsg = "Login Successful"; // Expected message on successful login
+  const email = "qa_testers@qabrains.com";
+  const password = "Password123";
+  const loginSuccessfulMsg = "Login Successful";
 
   // Locators for buttons
   const loginButton = ".btn-submit:contains('Login')";

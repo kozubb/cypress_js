@@ -1,13 +1,13 @@
 describe("POST Request to Create Post", () => {
   it("should create a new post via API", () => {
     // Test data initialization
-    const restApiUrl = "https://jsonplaceholder.typicode.com/"; // The base URL of the API
-    const path = "posts"; // API endpoint for posts
+    const restApiUrl = "https://jsonplaceholder.typicode.com/";
+    const path = "posts";
     const requestBody = {
       // Data to be sent in the POST request body
-      title: "testTitle", // Title of the post
-      body: "bodyTitle", // Body content of the post
-      userId: 1, // User ID associated with the post
+      title: "testTitle",
+      body: "bodyTitle",
+      userId: 1,
     };
 
     // Step 1: Send POST request to create a new post

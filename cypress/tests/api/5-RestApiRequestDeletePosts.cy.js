@@ -1,8 +1,8 @@
 describe("DELETE Request to Remove Post", () => {
   it("should delete an existing post via API", () => {
     // Test data initialization
-    const restApiUrl = "https://jsonplaceholder.typicode.com/"; // The base URL of the API
-    const path = "posts"; // API endpoint for posts
+    const restApiUrl = "https://jsonplaceholder.typicode.com/";
+    const path = "posts";
     const postId = 1; // ID of the post to delete (for example, we are deleting post with ID 1)
 
     // Step 1: Send DELETE request to remove the existing post

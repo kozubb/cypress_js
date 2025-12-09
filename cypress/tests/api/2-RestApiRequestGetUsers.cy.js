@@ -1,13 +1,13 @@
 describe("GET Request for User Data", () => {
   it("should validate the GET request for a user through an API", () => {
     // Test data initialization
-    const restApiUrl = "https://jsonplaceholder.typicode.com/"; // The base URL of the API
-    const path = "users"; // API endpoint for users
-    const expectedName = "Kurtis Weissnat"; // Expected name of the user in the API response
-    const expectedUsername = "Elwyn.Skiles"; // Expected username of the user in the API response
-    const expectedCity = "Howemouth"; // Expected city in the user's address
-    const expectedCompanyName = "Johns Group"; // Expected company name of the user
-    const expectedCatchPhrase = "Configurable multimedia task-force"; // Expected company catchphrase
+    const restApiUrl = "https://jsonplaceholder.typicode.com/";
+    const path = "users";
+    const expectedName = "Kurtis Weissnat";
+    const expectedUsername = "Elwyn.Skiles";
+    const expectedCity = "Howemouth";
+    const expectedCompanyName = "Johns Group";
+    const expectedCatchPhrase = "Configurable multimedia task-force";
 
     // Step 1: Send GET request to the users API
     cy.request({

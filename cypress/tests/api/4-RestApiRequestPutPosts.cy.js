@@ -1,15 +1,15 @@
 describe("PUT Request to Update Post", () => {
   it("should update an existing post via API", () => {
     // Test data initialization
-    const restApiUrl = "https://jsonplaceholder.typicode.com/"; // The base URL of the API
-    const path = "posts"; // API endpoint for posts
+    const restApiUrl = "https://jsonplaceholder.typicode.com/";
+    const path = "posts";
     const postId = 1; // ID of the post to update (for example, we are updating post with ID 1)
 
     // Data to be sent in the PUT request body for updating the post
     const updatedRequestBody = {
-      title: "updatedTitle", // Updated title of the post
-      body: "updatedBody", // Updated body content of the post
-      userId: 1, // User ID associated with the post (same as the original post)
+      title: "updatedTitle",
+      body: "updatedBody",
+      userId: 1,
     };
 
     // Step 1: Send PUT request to update the existing post

@@ -1,13 +1,13 @@
 describe("GET Request Zipcode", () => {
   it("should validate the GET request for a ZipCode via an API", () => {
     // Test data initialization
-    const restApiUrl = "https://api.zippopotam.us/"; // The base URL of the ZipCode API
-    const countryCode = "us"; // The country code (United States)
-    const zipCode = 28270; // The ZipCode we want to look up (Charlotte, NC)
-    const country = "United States"; // Expected country name in the API response
-    const stateCode = "NC"; // Expected state abbreviation (North Carolina)
-    const stateName = "North Carolina"; // Full name of the state
-    const city = "Charlotte"; // Expected city name in the API response
+    const restApiUrl = "https://api.zippopotam.us/";
+    const countryCode = "us";
+    const zipCode = 28270;
+    const country = "United States";
+    const stateCode = "NC";
+    const stateName = "North Carolina";
+    const city = "Charlotte";
 
     // Step 1: Send GET request to the ZipCode API
     cy.request({
