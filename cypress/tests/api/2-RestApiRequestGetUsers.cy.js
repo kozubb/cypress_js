@@ -1,14 +1,15 @@
 describe("GET Request for User Data", () => {
-  it("should validate the GET request for a user through an API", () => {
-    // Test data initialization
-    const restApiUrl = "https://jsonplaceholder.typicode.com/";
-    const path = "users";
-    const expectedName = "Kurtis Weissnat";
-    const expectedUsername = "Elwyn.Skiles";
-    const expectedCity = "Howemouth";
-    const expectedCompanyName = "Johns Group";
-    const expectedCatchPhrase = "Configurable multimedia task-force";
+  // Test data initialization
+  const restApiUrl = "https://jsonplaceholder.typicode.com/";
+  const path = "users";
+  const notExistedPath = "userstest";
+  const expectedName = "Kurtis Weissnat";
+  const expectedUsername = "Elwyn.Skiles";
+  const expectedCity = "Howemouth";
+  const expectedCompanyName = "Johns Group";
+  const expectedCatchPhrase = "Configurable multimedia task-force";
 
+  it("should validate the GET request for a user through an API", () => {
     // Step 1: Send GET request to the users API
     cy.request({
       method: "GET",
@@ -38,6 +39,21 @@ describe("GET Request for User Data", () => {
 
       // Validate the company catchphrase
       expect(response.body.company.catchPhrase).to.eq(expectedCatchPhrase); // Assert that the company catchphrase matches the expected value
+    });
+  });
+
+  it("should return 404 status for a non-existent path", () => {
+    // Step 1: Send a GET request to the API with a non-existent path
+    cy.request({
+      method: "GET",
+      url: `${restApiUrl}${notExistedPath}/7`, // Construct the URL with a non-existent path (user ID 7)
+      headers: {
+        Accept: "application/json",
+      },
+      failOnStatusCode: false, // Don't fail the test on 404 response, so we can check it
+    }).then((response) => {
+      // Step 2: Assert that the status code is 404 (Not Found)
+      expect(response.status).to.eq(404); // Validate that the response code is 404 for non-existent path
     });
   });
 });
