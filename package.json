@@ -16,6 +16,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@testing-library/cypress": "^10.1.0",
     "cypress": "^15.7.0",
     "cypress-ctrf-json-reporter": "^0.0.13",
     "cypress-multi-reporters": "^2.0.5",
