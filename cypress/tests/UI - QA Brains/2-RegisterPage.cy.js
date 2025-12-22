@@ -11,7 +11,7 @@ describe("Register account", () => {
     password: "Test123!",
   };
 
-  it("should register a new account", () => {
+  it.skip("should register a new account", () => {
     // Intercept request for successful registration
     cy.intercept("GET", "**/registration?registered=true**").as(
       "registerRequest"

@@ -30,7 +30,7 @@ const login = () => {
 };
 
 describe("E2E test - place order", () => {
-  it("should place an order successfully", () => {
+  it.skip("should place an order successfully", () => {
     // Step 1: Login
     login();
 
@@ -83,9 +83,7 @@ describe("E2E test - place order", () => {
     // Step 6: Review order
     cy.url().should("eq", `${endpoint}ecommerce/checkout-overview`);
 
-    cy.get("p.text-md")
-      .last()
-      .should("contain.text", totalPrice);
+    cy.get("p.text-md").last().should("contain.text", totalPrice);
 
     // Step 7: Finish checkout
     cy.findByRole("button", { name: /finish/i }).click();

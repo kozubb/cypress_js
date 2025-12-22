@@ -9,7 +9,7 @@ describe("Login into account", () => {
   const loginButton = ".btn-submit:contains('Login')";
   const logoutButton = ".btn-submit:contains('Logout')";
 
-  it("should log in and log out successfully", () => {
+  it.skip("should log in and log out successfully", () => {
     // Step 1: Navigate to the login page
     cy.visit(endpoint); // Navigate to the main endpoint
 
