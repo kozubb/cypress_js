@@ -3,7 +3,7 @@ const { GenerateCtrfReport } = require("cypress-ctrf-json-reporter");
 
 module.exports = defineConfig({
   e2e: {
-    specPattern: "cypress/tests/**/*.cy.js",
+    specPattern: "cypress/e2e/**/*.cy.js",
     experimentalMemoryManagement: true,
     trashAssetsBeforeRuns: false,
     retries: {
