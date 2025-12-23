@@ -25,6 +25,12 @@ class LoginPage {
     cy.get(this.loginButton).should("be.visible");
   }
 
+  // Check login error message
+  checkLoginErrorMessage(expectedText) {
+    cy.log(`Validating if error message is: ${expectedText}`);
+    cy.get(`[data-test="error"]`).should("contain.text", expectedText);
+  }
+
   // #endregion
 }
 
