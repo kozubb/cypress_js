@@ -20,13 +20,13 @@ class LoginPage {
   // #region Validations on UI elements
 
   // Check if login button is visible on the page
-  checkIfLoginButtonIsVisible() {
+  validateIfLoginButtonIsVisible() {
     cy.log("Validating that login button is visible");
     cy.get(this.loginButton).should("be.visible");
   }
 
   // Check login error message
-  checkLoginErrorMessage(expectedText) {
+  validateLoginErrorMessage(expectedText) {
     cy.log(`Validating if error message is: ${expectedText}`);
     cy.get(`[data-test="error"]`).should("contain.text", expectedText);
   }

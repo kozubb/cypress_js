@@ -49,19 +49,19 @@ export default class ProductListing {
   // #region Validations on UI elements
 
   // Check if shopping cart icon is visible
-  checkIfCartIsVisible() {
+  validateIfCartIsVisible() {
     cy.get('[data-test="shopping-cart-link"]').should("be.visible");
     return this;
   }
 
   // Check if remove button is visible for specific product
-  checkIfRemoveButtonIsVisible(productName) {
+  validateIfRemoveButtonIsVisible(productName) {
     this.removeProductButton(productName).should("be.visible");
     return this;
   }
 
   // Check shopping cart amount
-  checkShoppingCartAmount(expectedNumber) {
+  validateShoppingCartAmount(expectedNumber) {
     cy.get('[data-test="shopping-cart-badge"]').should(
       "have.text",
       expectedNumber

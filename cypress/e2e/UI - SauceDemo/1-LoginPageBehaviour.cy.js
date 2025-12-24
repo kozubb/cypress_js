@@ -31,7 +31,7 @@ describe("Login into account and logout - success", () => {
 
     // Step 5: Verify successful login
     cy.url().should("include", "/inventory.html");
-    productListing.checkIfCartIsVisible();
+    productListing.validateIfCartIsVisible();
 
     // Step 6: Open hamburger menu and log out
     hamburgerMenu.pressHamburgerMenuIcon();
@@ -39,7 +39,7 @@ describe("Login into account and logout - success", () => {
 
     // Step 7: Verify return to login page
     cy.url().should("eq", `${endpoint}/`);
-    login.checkIfLoginButtonIsVisible();
+    login.validateIfLoginButtonIsVisible();
   });
 
   it("login - wrong password", () => {
@@ -54,7 +54,7 @@ describe("Login into account and logout - success", () => {
     login.pressLoginButton();
 
     // Step 5: Verify error message for wrong credentials
-    login.checkLoginErrorMessage(wrongDataMessage);
+    login.validateLoginErrorMessage(wrongDataMessage);
   });
 
   it("login - user is locked", () => {
@@ -69,6 +69,6 @@ describe("Login into account and logout - success", () => {
     login.pressLoginButton();
 
     // Step 5: Verify error message for locked user
-    login.checkLoginErrorMessage(lockedUserMessage);
+    login.validateLoginErrorMessage(lockedUserMessage);
   });
 });
