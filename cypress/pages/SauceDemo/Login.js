@@ -1,4 +1,4 @@
-class LoginPage {
+export default class LoginPage {
   loginButton = `[data-test="login-button"]`;
 
   // #region Actions on UI elements
@@ -33,5 +33,3 @@ class LoginPage {
 
   // #endregion
 }
-
-export default LoginPage;

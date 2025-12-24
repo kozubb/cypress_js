@@ -1,4 +1,4 @@
-class HamburgerMenu {
+export default class HamburgerMenu {
   hamburgerMenuIcon = "#react-burger-menu-btn";
   logoutButton = '[data-test="logout-sidebar-link"]';
 
@@ -24,5 +24,3 @@ class HamburgerMenu {
 
   // #endregion
 }
-
-export default HamburgerMenu;
