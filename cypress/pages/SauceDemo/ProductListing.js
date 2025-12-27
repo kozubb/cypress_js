@@ -1,19 +1,27 @@
 export default class ProductListing {
   // #region Helpers on UI elements (dynamic elements)
 
+  // Converts product name to selector format
+  formatProductName(productName) {
+    return productName.toLowerCase().replace(/\s+/g, "-");
+  }
+
   // Return selector for add to order button
   addToOrderButton(productName) {
-    return cy.get(`[data-test="add-to-cart-${productName}"]`);
+    const formattedName = this.formatProductName(productName);
+    return cy.get(`[data-test="add-to-cart-${formattedName}"]`);
   }
 
   // Return selector for remove product button
   removeProductButton(productName) {
-    return cy.get(`[data-test="remove-${productName}"]`);
+    const formattedName = this.formatProductName(productName);
+    return cy.get(`[data-test="remove-${formattedName}"]`);
   }
 
   // Return selector for product image
   productImage(productName) {
-    return cy.get(`[data-test="inventory-item-${productName}-img"]`);
+    const formattedName = this.formatProductName(productName);
+    return cy.get(`[data-test="inventory-item-${formattedName}-img"]`);
   }
 
   // #endregion
