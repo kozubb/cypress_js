@@ -17,7 +17,7 @@ const productBackpackId = 4;
 const productBackpackPrice = "$29.99";
 const productBikeLightPrice = "$9.99";
 
-describe("Add products to cart and verify cart details", () => {
+describe("Add products to cart different behaviour", () => {
   it("should add products from listing page and verify cart", () => {
     // Log in
     loginAs({ endpoint, username, password });
@@ -90,5 +90,42 @@ describe("Add products to cart and verify cart details", () => {
       .validateProductTitleInBasket(productBikeLightId, productBikeLightName)
       .validateProductQuantityInCart(1, "1")
       .validateProductPriceInCart(1, productBikeLightPrice);
+  });
+
+  it("should not allow adding the same product twice", () => {
+    // Step 1: Log in as standard user
+    loginAs({ endpoint, username, password });
+
+    // Step 2: Initialize page objects
+    const productListing = new ProductListing();
+    const cart = new Cart();
+    const productDetails = new ProductDetails();
+
+    // Step 3: Verify inventory page is loaded and cart is visible
+    cy.url().should("include", "/inventory.html");
+    productListing.validateIfCartIsVisible();
+
+    // Step 4: Add productBackpack from PDP
+    productListing.pressProductImage(productBackpackName); // Open PDP
+    cy.url().should("include", `inventory-item.html?id=${productBackpackId}`);
+    productDetails
+      .validateProductTitle(productBackpackName) // Validate title
+      .validateProductPrice(productBackpackPrice) // Validate price
+      .pressAddToCartButton() // Add to cart
+      .validateIfRemoveButtonIsVisible() // Validate "Remove" button
+      .pressBackButton(); // Go back to listing page
+    productListing.validateShoppingCartAmount("1"); // Validate cart count
+
+    // Step 5: Verify "Add to Cart" button is disabled / cannot add again
+    productListing.validateIfRemoveButtonIsVisible(productBackpackName);
+
+    // Step 6: Add productBikeLight from PLP
+    productListing
+      .pressAddToOrderButton(productBikeLightName) // Add from listing
+      .validateShoppingCartAmount("2") // Validate cart count
+      .validateIfRemoveButtonIsVisible(productBikeLightName); // Validate "Remove" button
+
+    // Step 7: Verify "Add to Cart" button is disabled for productBikeLight
+    productListing.validateIfRemoveButtonIsVisible(productBikeLightName);
   });
 });

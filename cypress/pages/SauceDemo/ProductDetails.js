@@ -42,5 +42,11 @@ export default class ProductListing {
     return this;
   }
 
+  // Validate if "Remove" button is visible after adding product to the cart
+  validateIfRemoveButtonIsVisible() {
+    cy.get('[data-test="remove"]').should("be.visible");
+    return this;
+  }
+
   // #endregion
 }
