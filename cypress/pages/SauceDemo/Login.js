@@ -7,12 +7,14 @@ export default class LoginPage {
   fillInput(inputName, expectedText) {
     cy.log(`Filling ${inputName} input by ${expectedText}`);
     cy.get(`[data-test="${inputName}"]`).type(expectedText);
+    return this;
   }
 
   // Press login button
   pressLoginButton() {
     cy.log("Pressing login buttopn");
     cy.get(this.loginButton).click();
+    return this;
   }
 
   // #endregion
@@ -23,12 +25,14 @@ export default class LoginPage {
   validateIfLoginButtonIsVisible() {
     cy.log("Validating that login button is visible");
     cy.get(this.loginButton).should("be.visible");
+    return this;
   }
 
   // Check login error message
   validateLoginErrorMessage(expectedText) {
     cy.log(`Validating if error message is: ${expectedText}`);
     cy.get(`[data-test="error"]`).should("contain.text", expectedText);
+    return this;
   }
 
   // #endregion

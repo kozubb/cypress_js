@@ -1,4 +1,4 @@
-export default class LoginPage {
+export default class ThankYouPage {
   // #region Actions
 
   // Click "Back Home" button

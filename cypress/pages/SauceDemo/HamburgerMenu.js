@@ -4,23 +4,26 @@ export default class HamburgerMenu {
 
   // #region Actions on UI elements
 
-  // Click on the hamburger menu icon
+  // Click the hamburger menu icon
   pressHamburgerMenuIcon() {
-    cy.log("Pressing hambruegr menu icon");
+    cy.log("Clicking the hamburger menu icon");
     cy.get(this.hamburgerMenuIcon).click();
+    return this;
   }
 
-  // Click on the logout button in the hamburger menu
+  // Click the logout button in the hamburger menu
   pressHamburgerMenuLogoutBtn() {
-    cy.log("Pressing logout link btn");
+    cy.log("Clicking the logout button in the hamburger menu");
     cy.get(this.logoutButton).click();
+    return this;
   }
 
   // #endregion
 
   // #region Validations on UI elements
 
-  // (No validation code here, but you can add assertions if needed)
+  // Placeholder for future validations
+  // e.g., check if menu is visible, logout button exists, etc.
 
   // #endregion
 }

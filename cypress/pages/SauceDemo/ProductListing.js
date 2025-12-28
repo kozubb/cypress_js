@@ -3,24 +3,28 @@ export default class ProductListing {
 
   // Converts product name to selector format
   formatProductName(productName) {
+    cy.log(`Formatting product name: "${productName}"`);
     return productName.toLowerCase().replace(/\s+/g, "-");
   }
 
   // Return selector for add to order button
   addToOrderButton(productName) {
     const formattedName = this.formatProductName(productName);
+    cy.log(`Getting "Add to Order" button for: "${productName}"`);
     return cy.get(`[data-test="add-to-cart-${formattedName}"]`);
   }
 
   // Return selector for remove product button
   removeProductButton(productName) {
     const formattedName = this.formatProductName(productName);
+    cy.log(`Getting "Remove" button for: "${productName}"`);
     return cy.get(`[data-test="remove-${formattedName}"]`);
   }
 
   // Return selector for product image
   productImage(productName) {
     const formattedName = this.formatProductName(productName);
+    cy.log(`Getting product image for: "${productName}"`);
     return cy.get(`[data-test="inventory-item-${formattedName}-img"]`);
   }
 
@@ -30,24 +34,28 @@ export default class ProductListing {
 
   // Press add to order button for specific product
   pressAddToOrderButton(productName) {
+    cy.log(`Clicking "Add to Order" button for: "${productName}"`);
     this.addToOrderButton(productName).click();
     return this;
   }
 
   // Press remove product button for specific product
   pressRemoveProductButton(productName) {
+    cy.log(`Clicking "Remove" button for: "${productName}"`);
     this.removeProductButton(productName).click();
     return this;
   }
 
-  // Press product image for specific product for opening pdp
+  // Press product image for specific product for opening PDP
   pressProductImage(productName) {
+    cy.log(`Clicking product image for: "${productName}"`);
     this.productImage(productName).click();
     return this;
   }
 
   // Press shopping cart icon
   pressShoppingCartIcon() {
+    cy.log("Clicking shopping cart icon");
     cy.get('[data-test="shopping-cart-link"]').click();
     return this;
   }
@@ -58,18 +66,21 @@ export default class ProductListing {
 
   // Check if shopping cart icon is visible
   validateIfCartIsVisible() {
+    cy.log("Validating that shopping cart icon is visible");
     cy.get('[data-test="shopping-cart-link"]').should("be.visible");
     return this;
   }
 
   // Check if remove button is visible for specific product
   validateIfRemoveButtonIsVisible(productName) {
+    cy.log(`Validating "Remove" button is visible for: "${productName}"`);
     this.removeProductButton(productName).should("be.visible");
     return this;
   }
 
   // Check shopping cart amount
   validateShoppingCartAmount(expectedNumber) {
+    cy.log(`Validating shopping cart amount: ${expectedNumber}`);
     cy.get('[data-test="shopping-cart-badge"]').should(
       "have.text",
       expectedNumber

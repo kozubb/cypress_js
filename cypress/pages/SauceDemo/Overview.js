@@ -1,8 +1,12 @@
+import Helpers from "./Helpers";
+const helpers = new Helpers();
+
 export default class Overview {
   // #region Actions
 
   // Click finish button
   pressFinishButton() {
+    cy.log("Clicking 'Finish' button");
     cy.get('[data-test="finish"]').click();
     return this;
   }
@@ -13,6 +17,7 @@ export default class Overview {
 
   // Validate payment method text
   validatePaymentMethod(expectedText) {
+    cy.log(`Validating payment method text: "${expectedText}"`);
     cy.get('[data-test="payment-info-value"]').should(
       "have.text",
       expectedText
@@ -22,6 +27,7 @@ export default class Overview {
 
   // Validate delivery method text
   validateDeliveryMethod(expectedText) {
+    cy.log(`Validating delivery method text: "${expectedText}"`);
     cy.get('[data-test="shipping-info-value"]').should(
       "have.text",
       expectedText
@@ -30,70 +36,20 @@ export default class Overview {
   }
 
   // Validate subtotal price (currency + numeric value)
-  validateSubtotal(expectedCurrency, expectedSubtotal) {
-    cy.get('[data-test="subtotal-label"]')
-      .invoke("text")
-      .then((text) => {
-        if (!text) throw new Error("Subtotal text not found");
-
-        const currencyMatch = text.match(/^[^\d]+/);
-        const numberMatch = text.match(/[\d,.]+/);
-
-        if (!currencyMatch)
-          throw new Error(`Currency not found in subtotal "${text}"`);
-        if (!numberMatch)
-          throw new Error(`Numeric value not found in subtotal "${text}"`);
-
-        expect(currencyMatch[0]).to.eq(expectedCurrency);
-        expect(parseFloat(numberMatch[0].replace(",", ""))).to.be.closeTo(
-          expectedSubtotal,
-          0.01
-        );
-      });
+  validateSubtotal(expectedPrice, currency) {
+    cy.log(`Validating subtotal: ${currency}${expectedPrice}`);
+    cy.get('[data-test="subtotal-label"]').then(($Price) => {
+      helpers.priceValidator($Price, expectedPrice, currency);
+    });
     return this;
   }
 
-  // Validate total equals subtotal + tax, check currency
-  validateTotalFromSubtotalAndTax() {
-    let subtotalValue = 0;
-    let taxValue = 0;
-    let totalValue = 0;
-    let currency = "";
-
-    cy.get('[data-test="subtotal-label"]')
-      .invoke("text")
-      .then((text) => {
-        const currencyMatch = text.match(/^[^\d]+/) ?? [];
-        const numberMatch = text.match(/[\d,.]+/) ?? [];
-        if (!currencyMatch[0] || !numberMatch[0])
-          throw new Error("Subtotal invalid");
-        currency = currencyMatch[0];
-        subtotalValue = parseFloat(numberMatch[0].replace(",", ""));
-      });
-
-    cy.get('[data-test="tax-label"]')
-      .invoke("text")
-      .then((text) => {
-        const currencyMatch = text.match(/^[^\d]+/) ?? [];
-        const numberMatch = text.match(/[\d,.]+/) ?? [];
-        if (!currencyMatch[0] || !numberMatch[0])
-          throw new Error("Tax invalid");
-        expect(currencyMatch[0]).to.eq(currency);
-        taxValue = parseFloat(numberMatch[0].replace(",", ""));
-      });
-
-    cy.get('[data-test="total-label"]')
-      .invoke("text")
-      .then((text) => {
-        const currencyMatch = text.match(/^[^\d]+/) ?? [];
-        const numberMatch = text.match(/[\d,.]+/) ?? [];
-        if (!currencyMatch[0] || !numberMatch[0])
-          throw new Error("Total invalid");
-        expect(currencyMatch[0]).to.eq(currency);
-        totalValue = parseFloat(numberMatch[0].replace(",", ""));
-        expect(totalValue).to.be.closeTo(subtotalValue + taxValue, 0.01);
-      });
-
+  // Validate total price, check currency
+  validateTotalPrice(expectedPrice, currencySymbol) {
+    cy.log(`Validating total price: ${currencySymbol}${expectedPrice}`);
+    cy.get('[data-test="total-label"]').then(($Price) => {
+      helpers.priceValidator($Price, expectedPrice, currencySymbol);
+    });
     return this;
   }
 
