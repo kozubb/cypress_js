@@ -12,7 +12,7 @@ export default class Checkout {
   // Fill checkout input by input name and expected text
   fillCheckoutInput(inputName, expectedText) {
     cy.log(`Filling input "${inputName}" with text "${expectedText}"`);
-    cy.findByRole("textbox", { name: inputName }).type(expectedText);
+    cy.get(`[data-test="${inputName}"]`).type(expectedText);
     return this;
   }
 

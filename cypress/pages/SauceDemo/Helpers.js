@@ -19,21 +19,24 @@ export default class Helpers {
     return this;
   }
 
+  // Remove letters, colons, and spaces from a string
+  removeLettersColonAndSpace(string) {
+    let formattedText = string
+      .text()
+      .replace(/[a-zA-Z:\s]/g, "")
+      .trim();
+    return formattedText;
+  }
+
   // Remove currency symbols from a string and return numeric part
   removeCurrencySymbol(string) {
-    let formattedString = string
-      .text()
-      .replace(/[\$£€+]/g, "")
-      .trim();
+    let formattedString = string.replace(/[\$£€+]/g, "").trim();
     return formattedString;
   }
 
   // Remove numeric price and return only currency symbols
   removePrice(string) {
-    let formattedString = string
-      .text()
-      .replace(/[0-9]+,?.[0-9]{2}/g, "")
-      .trim();
+    let formattedString = string.replace(/[0-9]+,?.[0-9]{2}/g, "").trim();
     return formattedString;
   }
 
@@ -58,11 +61,15 @@ export default class Helpers {
     expectedCurrencySymbol
   ) {
     let expectedPriceAsNumberFixed = +expectedPriceValue.toFixed(2);
+    let priceWithoutLetters =
+      this.removeLettersColonAndSpace(currentPriceElement);
     let price = this.changeCommaSign(
-      this.removeCurrencySymbol(currentPriceElement)
+      this.removeCurrencySymbol(priceWithoutLetters)
     );
+    let currencyWithoutLetters =
+      this.removeLettersColonAndSpace(currentPriceElement);
     let currencySymbol = this.removeSpecialChars(
-      this.removePrice(currentPriceElement)
+      this.removePrice(currencyWithoutLetters)
     );
 
     // Assert that numeric price matches expected
