@@ -56,3 +56,115 @@ This project demonstrates an end-to-end (E2E) testing framework using **Cypress*
 - **GitHub Actions**: For CI/CD and test automation
 - **Node.js**: JavaScript runtime
 - **HTML Reports**: For detailed test reporting
+
+## How to Run Tests
+
+### Prerequisites
+
+- Node.js (recommended LTS version)
+- npm (comes with Node.js)
+
+### Install Dependencies
+
+npm install
+
+Installs all required packages for running the Cypress tests.
+
+### Run Cypress Tests
+
+You can run tests either in interactive mode (for development/debugging) or in headless mode (for CI/CD).
+
+**Open Cypress Test Runner (Chrome)**
+
+npm run cy:open:chrome
+
+- Opens Cypress UI
+- Allows running tests interactively in Chrome
+
+**Run Cypress tests headlessly (Chrome)**
+
+npm run cy:run:chrome
+
+- Runs all tests headlessly in Chrome
+- Recommended for CI/CD pipelines
+
+### NPM Scripts
+
+- `"cy:open:chrome": "npx cypress open --browser chrome"`
+- `"cy:run:chrome": "cypress run --browser chrome --headless"`
+
+### Prerequisites
+
+- **Node.js** (recommended LTS version)
+- **npm** (comes with Node.js)
+
+### Install dependencies
+
+## Test Strategy
+
+The project follows a **balanced testing pyramid approach**.
+
+### Frontend E2E Tests
+
+- Focus only on **business-critical user flows**
+- Validate real UI behavior from an **end-user perspective**
+- Avoid over-testing UI details
+- Written with **stability and readability** in mind
+
+### API Tests
+
+- Faster and more reliable than UI tests
+- Used to validate backend logic **independently**
+- Reduce the need for excessive E2E coverage
+
+---
+
+## Design Decisions
+
+### Page Object Pattern
+
+Each page has its own class containing:
+
+- UI actions
+- Validations
+
+**Benefits:**
+
+- Tests remain clean and focused only on **business flow**
+- Easier maintenance when selectors or UI structure change
+
+### Cypress with JavaScript
+
+JavaScript was chosen because it offers:
+
+- Faster onboarding
+- Less configuration overhead
+- Native Cypress ecosystem support
+
+### Chrome-only Execution
+
+Chrome is selected as the primary browser because:
+
+- It reflects the most common real-user environment
+- Reduces test flakiness
+- Simplifies CI configuration
+
+---
+
+## Trade-offs and Limitations
+
+### Cypress-related trade-offs
+
+- No true multi-tab support
+- Limited cross-domain testing
+- Single-browser focus
+
+**These limitations are accepted because:**
+
+- The tested applications do not require multi-tab workflows
+- The goal is **fast, stable feedback**, not exhaustive browser coverage
+
+## Future Goals
+
+- Implement **visual regression tests** to detect UI changes automatically
+- Implement **accessibility (a11y) tests** to ensure compliance with accessibility standards
