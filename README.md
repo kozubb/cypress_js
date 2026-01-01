@@ -57,48 +57,7 @@ This project demonstrates an end-to-end (E2E) testing framework using **Cypress*
 - **Node.js**: JavaScript runtime
 - **HTML Reports**: For detailed test reporting
 
-## How to Run Tests
-
-### Prerequisites
-
-- Node.js (recommended LTS version)
-- npm (comes with Node.js)
-
-### Install Dependencies
-
-npm install
-
-Installs all required packages for running the Cypress tests.
-
-### Run Cypress Tests
-
-You can run tests either in interactive mode (for development/debugging) or in headless mode (for CI/CD).
-
-**Open Cypress Test Runner (Chrome)**
-
-npm run cy:open:chrome
-
-- Opens Cypress UI
-- Allows running tests interactively in Chrome
-
-**Run Cypress tests headlessly (Chrome)**
-
-npm run cy:run:chrome
-
-- Runs all tests headlessly in Chrome
-- Recommended for CI/CD pipelines
-
-### NPM Scripts
-
-- `"cy:open:chrome": "npx cypress open --browser chrome"`
-- `"cy:run:chrome": "cypress run --browser chrome --headless"`
-
-### Prerequisites
-
-- **Node.js** (recommended LTS version)
-- **npm** (comes with Node.js)
-
-### Install dependencies
+---
 
 ## Test Strategy
 
@@ -168,3 +127,41 @@ Chrome is selected as the primary browser because:
 
 - Implement **visual regression tests** to detect UI changes automatically
 - Implement **accessibility (a11y) tests** to ensure compliance with accessibility standards
+
+---
+
+## How to Run Tests
+
+### Prerequisites
+
+- Node.js (recommended LTS version)
+- npm (comes with Node.js)
+
+### Install Dependencies
+
+npm install
+
+Installs all required packages for running the Cypress tests.
+
+### Run Cypress Tests
+
+You can run tests either in interactive mode (for development/debugging) or in headless mode (for CI/CD).
+
+**Open Cypress Test Runner (Chrome)**
+
+npm run cy:open:chrome
+
+- Opens Cypress UI
+- Allows running tests interactively in Chrome
+
+**Run Cypress tests headlessly (Chrome)**
+
+npm run cy:run:chrome
+
+- Runs all tests headlessly in Chrome
+- Recommended for CI/CD pipelines
+
+### NPM Scripts
+
+- `"cy:open:chrome": "npx cypress open --browser chrome"`
+- `"cy:run:chrome": "cypress run --browser chrome --headless"`
