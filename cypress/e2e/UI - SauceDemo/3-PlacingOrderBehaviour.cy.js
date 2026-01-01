@@ -81,7 +81,7 @@ describe("Place order", () => {
 
     // Step 8: Validate overview page
     overview
-      .validatePaymentMethod(testData.Paymentmethod)
+      .validatePaymentMethod(testData.PaymentMethod)
       .validateDeliveryMethod(testData.DeliveryMethod)
       .validateSubtotal(
         testData.Products.Backpack.Price + testData.Products.BikeLight.Price,

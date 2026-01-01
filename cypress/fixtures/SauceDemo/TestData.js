@@ -2,7 +2,7 @@ const testData = {
   Endpoint: "https://www.saucedemo.com",
   CurrencySymbol: "$",
   Tax: 0.08,
-  Paymentmethod: "SauceCard #31337",
+  PaymentMethod: "SauceCard #31337",
   DeliveryMethod: "Free Pony Express Delivery!",
   Users: {
     StandardUser: {
