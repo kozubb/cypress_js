@@ -1,97 +1,55 @@
-// Initial test data
-const endpoint = "https://practice.qabrains.com/";
-const email = "test@qabrains.com";
-const password = "Password123";
-const shoeName = "Sample Shoe Name";
-const firstName = "TestName";
-const lastName = "TestLasNname";
-const zipCode = 1207;
-const shoePrice = 89.0;
-const deliveryPrice = 4.45;
-const totalPrice = shoePrice + deliveryPrice;
-const thankYouMessage = "Thank you for your order!";
+import Helpers from '../../pages/QABrains/Helpers'
+import ProductListing from '../../pages/QABrains/ProductListing'
+import Cart from '../../pages/QABrains/Cart'
+import Checkout from '../../pages/QABrains/Checkout'
+import Overview from '../../pages/QABrains/Overview'
+import ThankYouPage from '../../pages/QABrains/ThankYouPage'
+import testData from '../../fixtures/QABrains/TestData'
 
-// Helper function for login
-const login = () => {
-  cy.visit(`${endpoint}ecommerce/login`);
+// Initialize page objects
+const helpers = new Helpers()
+const productListing = new ProductListing()
+const cart = new Cart()
+const checkout = new Checkout()
+const overview = new Overview()
+const thankYou = new ThankYouPage()
 
-  cy.findByRole("textbox", { name: /email/i }).type(email);
-  cy.findByRole("textbox", { name: /password/i }).type(password);
+describe('E2E test - place order', () => {
+	it('should place an order successfully', () => {
+		// Step 1: Login
+		helpers.loginAs({
+			endpoint: `${testData.Endpoint}ecommerce/login`,
+			username: testData.Users.OrderUser.Username,
+			password: testData.Users.OrderUser.Password
+		})
 
-  cy.intercept("GET", `${endpoint}ecommerce?_rsc*`).as("loginPage");
-  cy.intercept("GET", `${endpoint}ecommerce/product-details*`).as("products");
+		// Step 2: Add product
+		productListing
+			.addProductToCartByName(testData.Products.Shoe.Name)
+			.validateCartAmount('1')
+			.openCart(testData.Endpoint)
 
-  cy.findByRole("button", { name: /login/i }).click();
+		// Step 3: Cart validations
+		cart
+			.validateRemoveButtonVisible()
+			.validateProductInCart(testData.Products.Shoe.Name, testData.Products.Shoe.Price)
+			.validateProductPriceInCart(testData.Products.Shoe.Price, testData.CurrencySymbol)
+			.pressCheckoutButton()
 
-  cy.wait("@loginPage");
-  cy.wait("@products");
+		// Step 4: Checkout
+		checkout
+			.validateEmailIsDisabled(testData.Users.OrderUser.Username)
+			.fillInput(testData.CheckoutForm.FirstNameText, testData.Users.OrderUser.FirstName)
+			.fillInput(testData.CheckoutForm.LastNameText, testData.Users.OrderUser.LastName)
+			.validateZipCode(testData.Users.OrderUser.Zipcode)
+			.pressContinueButton()
 
-  cy.get(".user-name").should("have.text", email);
-};
+		// Step 5: Overview
+		overview
+			.validateTotalPrice(testData.Products.Shoe.Price + testData.DeliveryPrice, testData.CurrencySymbol)
+			.pressFinishButton()
 
-describe("E2E test - place order", () => {
-  it.skip("should place an order successfully", () => {
-    // Step 1: Login
-    login();
-
-    // Step 2: Select product
-    cy.get(".text-lg.block").each(($el, index) => {
-      if ($el.text().trim() === shoeName) {
-        cy.get("button")
-          .contains(/add to cart/i)
-          .eq(index)
-          .click();
-      }
-    });
-
-    // Step 3: Check the basket
-    cy.get(".bg-qa-clr").should("have.text", "1");
-
-    cy.findByRole("button", { name: /remove from cart/i }).should("be.visible");
-
-    cy.intercept("GET", `${endpoint}ecommerce/cart*`).as("cart");
-
-    cy.get(".bg-qa-clr").click();
-    cy.wait("@cart").its("response.statusCode").should("eq", 200);
-
-    cy.url().should("eq", `${endpoint}ecommerce/cart`);
-
-    cy.findByRole("heading", { name: shoeName }).should("be.visible");
-
-    cy.get(".font-bold.text-lg.font-oswald")
-      .last()
-      .should("contain.text", shoePrice);
-
-    // Step 4: Checkout
-    cy.findByRole("button", { name: /checkout/i }).click();
-
-    cy.url().should("eq", `${endpoint}ecommerce/checkout-info`);
-
-    cy.get(`.cursor-no-drop[value="${email}"]`).should("be.disabled");
-
-    // Step 5: Fill checkout form
-    cy.findByRole("textbox", { name: /ex. john/i }).type(firstName);
-    cy.findByRole("textbox", { name: /ex. doe/i }).type(lastName);
-
-    cy.get(`.form-control[value="${zipCode}"]`).should(
-      "have.value",
-      `${zipCode}`
-    );
-
-    cy.findByRole("button", { name: /continue/i }).click();
-
-    // Step 6: Review order
-    cy.url().should("eq", `${endpoint}ecommerce/checkout-overview`);
-
-    cy.get("p.text-md").last().should("contain.text", totalPrice);
-
-    // Step 7: Finish checkout
-    cy.findByRole("button", { name: /finish/i }).click();
-
-    cy.url().should("eq", `${endpoint}ecommerce/checkout-complete`);
-
-    cy.findByRole("heading", {
-      name: /thank you for your order!/i,
-    }).should("have.text", thankYouMessage);
-  });
-});
+		// Step 6: Confirmation
+		thankYou.validateThankYouMessage(testData.Messages.ThankYouMessage)
+	})
+})

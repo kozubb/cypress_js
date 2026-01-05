@@ -1,0 +1,74 @@
+import LoginPage from '../../pages/QABrains/Login'
+
+export default class Helpers {
+	// Login into QA Brains with given credentials
+	loginAs({ endpoint, username, password }) {
+		cy.log(`Visiting login page: ${endpoint}`)
+		const login = new LoginPage()
+		cy.intercept('GET', `/ecommerce/product-details*`).as('products')
+
+		// Visit the login page
+		cy.visit(endpoint)
+
+		// Step 2: Fill in login form with valid user credentials
+
+		cy.log(`Logging in as user: ${username}`)
+		login.fillInput('email', username).fillInput('password', password).pressLoginButton()
+
+		cy.wait('@products')
+
+		cy.get('.user-name').should('have.text', username)
+
+		return this
+	}
+
+	// Remove letters, colons, and spaces from a string
+	removeLettersColonAndSpace(string) {
+		let formattedText = string
+			.text()
+			.replace(/[a-zA-Z:\s]/g, '')
+			.trim()
+		return formattedText
+	}
+
+	// Remove currency symbols from a string and return numeric part
+	removeCurrencySymbol(string) {
+		let formattedString = string.replace(/[\$£€+]/g, '').trim()
+		return formattedString
+	}
+
+	// Remove numeric price and return only currency symbols
+	removePrice(string) {
+		let formattedString = string.replace(/[0-9]+,?.[0-9]{2}/g, '').trim()
+		return formattedString
+	}
+
+	// Remove special characters and convert string to lowercase
+	removeSpecialChars = string => {
+		let formattedString = string.replace(/[&\/\\#,+()~%_.'":*?<>{} ]/g, '').toLowerCase()
+		return formattedString
+	}
+
+	// Convert comma to dot and parse string to float
+	changeCommaSign(string) {
+		let formattedString = parseFloat(string.trim().replace(',', '.'))
+		return formattedString
+	}
+
+	// Validate that price and currency symbol match expected values
+	priceValidator(currentPriceElement, expectedPriceValue, expectedCurrencySymbol) {
+		let expectedPriceAsNumberFixed = +expectedPriceValue.toFixed(2)
+		let priceWithoutLetters = this.removeLettersColonAndSpace(currentPriceElement)
+		let price = this.changeCommaSign(this.removeCurrencySymbol(priceWithoutLetters))
+		let currencyWithoutLetters = this.removeLettersColonAndSpace(currentPriceElement)
+		let currencySymbol = this.removeSpecialChars(this.removePrice(currencyWithoutLetters))
+
+		// Assert that numeric price matches expected
+		expect(price).to.be.equal(expectedPriceAsNumberFixed)
+
+		// Assert that currency symbol matches expected
+		expect(currencySymbol).to.be.equal(expectedCurrencySymbol)
+
+		return this
+	}
+}
