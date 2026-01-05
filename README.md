@@ -4,7 +4,7 @@
 
 This project demonstrates an end-to-end (E2E) testing framework using **Cypress** with **JavaScript**. It includes automated tests for:
 
-- **Frontend testing**: login, registration, and product purchase process.
+- **Frontend testing**: login, registration, adding products behaviour and product purchase process.
 - **API testing**: testing GET, POST, PUT, and DELETE requests.
 - **Cross-browser testing**: tests are run on **Chrome**.
 - **CI/CD pipeline**: integrated fully with **GitHub Actions**, including test execution and reporting.
@@ -15,11 +15,11 @@ This project demonstrates an end-to-end (E2E) testing framework using **Cypress*
 
 ### **Frontend Tests**:
 
-1. **QA Brains (Current site under maintenance)**
+1. **QA Brains**
 
    - Existing frontend tests for the QA Brains website.
-   - Currently **skipped** due to site being in maintenance mode.
    - Includes login, registration, and product purchase flows.
+   - Implemented using **Page Object Pattern** for maintainability and clarity.
 
 2. **Sauce Demo**
    - Frontend tests for [Sauce Demo](https://www.saucedemo.com) website.
