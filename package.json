@@ -25,6 +25,7 @@
     "mochawesome-report-generator": "^6.3.2"
   },
   "dependencies": {
-    "marge": "^1.0.1"
+    "marge": "^1.0.1",
+    "zod": "^4.3.5"
   }
 }
