@@ -6,6 +6,8 @@ This project demonstrates an end-to-end (E2E) testing framework using **Cypress*
 
 - **Frontend testing**: login, registration, adding products behaviour and product purchase process.
 - **API testing**: testing GET, POST, PUT, and DELETE requests.
+- **Contract Testing with Zod**: testing GET requests using Zod library.
+- **Accessibility (a11y) Audits**: tests are using cypress axe library library to ensure **WCAG 2.1** compliance and generate reports.
 - **Cross-browser testing**: tests are run on **Chrome**.
 - **CI/CD pipeline**: integrated fully with **GitHub Actions**, including test execution and reporting.
 
@@ -32,6 +34,16 @@ This project demonstrates an end-to-end (E2E) testing framework using **Cypress*
 ### **API Tests**:
 
 - GET, POST, PUT, and DELETE requests
+
+### Contract API Tests
+
+- GET requests using Zod library
+
+### Accessibility (a11y) Audits:
+
+- Automated scans using cypress axe library to ensure **WCAG 2.1** compliance.
+- Custom logic to generate visual **HTML reports** whenever violations are detected.
+- Navigation using keyboard keys
 
 ### **Cross-Browser Testing**:
 
@@ -76,6 +88,25 @@ The project follows a **balanced testing pyramid approach**.
 - Used to validate backend logic **independently**
 - Reduce the need for excessive E2E coverage
 
+### API Contract Testing
+
+- **Contract Testing with Zod**:
+
+  - Implementation of **Schema Validation** to ensure API responses match expected structures.
+  - Validating data types, mandatory fields, and nested objects (e.g., address and company details).
+
+## ♿ Accessibility Testing (a11y)
+
+This project integrates automated accessibility audits to ensure compliance with **WCAG 2.1** standards:
+
+- **Engine:** cypress-axe
+- Validation of navigation using keyboard navigation to simulate user interactions in accordance with
+  accessibility guidelines and allow moving through the application without a mouse.
+- Build can be run manually in Github Actions
+- **Reporting:** - If violations are found, a detailed **HTML Report** is generated.
+  - Reports are saved as **GitHub Action Artifacts**.
+  - Custom console logging provides immediate feedback on the number of violations.
+
 ---
 
 ## Design Decisions
@@ -108,6 +139,14 @@ Chrome is selected as the primary browser because:
 - Reduces test flakiness
 - Simplifies CI configuration
 
+### Contract Testing with Zod
+
+- Instead of just checking status codes, the project uses **Zod** for schema validation.
+- **Why Zod?**
+  - **Type Safety**: Automatically infers types from schemas.
+  - **Resilience**: Tests fail immediately if the backend changes a field name or data type, even if the status code is still 200.
+  - **Detailed Error Reporting**: Provides clear information on which exact field in a deeply nested JSON failed validation.
+
 ---
 
 ## Trade-offs and Limitations
@@ -126,7 +165,6 @@ Chrome is selected as the primary browser because:
 ## Future Goals
 
 - Implement **visual regression tests** to detect UI changes automatically
-- Implement **accessibility (a11y) tests** to ensure compliance with accessibility standards
 
 ---
 
@@ -156,7 +194,7 @@ npm run cy:open:chrome
 
 **Run Cypress tests headlessly (Chrome)**
 
-npm run cy:run:chrome
+`npm run cy:run:chrome -- --spec 'cypress/e2e/**/*' --config excludeSpecPattern='**/a11y/**/*' `
 
 - Runs all tests headlessly in Chrome
 - Recommended for CI/CD pipelines
@@ -165,3 +203,15 @@ npm run cy:run:chrome
 
 - `"cy:open:chrome": "npx cypress open --browser chrome"`
 - `"cy:run:chrome": "cypress run --browser chrome --headless"`
+
+### How to Run accessibility tests:
+
+**Run only accessibility tests**
+
+`npm run cy:run:chrome -- --spec 'cypress/e2e/a11y/**/*'`
+
+**View the results**
+
+Open /axe-reports/accessibility-report.html in your browser
+
+Open /cypress/reports/mochareports/report.html in your browser
