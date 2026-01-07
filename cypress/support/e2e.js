@@ -14,6 +14,8 @@
 // ***********************************************************
 
 // Import commands.js using ES2015 syntax:
-import "./commands";
-import "@testing-library/cypress/add-commands";
-import "./cyLogCustomStyles";
+import './commands'
+import 'cypress-plugin-tab'
+import 'cypress-axe'
+import '@testing-library/cypress/add-commands'
+import './cyLogCustomStyles'

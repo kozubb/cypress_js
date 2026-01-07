@@ -1,31 +1,37 @@
 {
-  "name": "cypress_js",
-  "version": "1.0.0",
-  "description": "cypressproject",
-  "main": "cypress.config.js",
-  "scripts": {
-    "cy:run": "npx cypress run",
-    "cy:open:chrome": "npx cypress open --browser chrome",
-    "cy:run:chrome": "cypress run --browser chrome --headless",
-    "scripts": "cypress run",
-    "combine-reports": "mkdir -p cypress/reports/mochareports && mochawesome-merge 'cypress/reports/mocha/*.json' > cypress/reports/mochareports/report.json",
-    "generate-report": "mkdir -p cypress/reports/mochareports && marge cypress/reports/mochareports/report.json -f report -o cypress/reports/mochareports --inline",
-    "posttest": "npm run combine-reports && npm run generate-report",
-    "test": "npm run cy:run:chrome || npm run posttest"
-  },
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "@testing-library/cypress": "^10.1.0",
-    "cypress": "^15.7.0",
-    "cypress-ctrf-json-reporter": "^0.0.13",
-    "cypress-multi-reporters": "^2.0.5",
-    "mochawesome": "^7.1.4",
-    "mochawesome-merge": "^5.1.0",
-    "mochawesome-report-generator": "^6.3.2"
-  },
-  "dependencies": {
-    "marge": "^1.0.1",
-    "zod": "^4.3.5"
-  }
+	"name": "cypress_js",
+	"version": "1.0.0",
+	"description": "cypressproject",
+	"main": "cypress.config.js",
+	"scripts": {
+		"cy:run": "npx cypress run",
+		"cy:open:chrome": "npx cypress open --browser chrome",
+		"cy:run:chrome": "cypress run --browser chrome --headless",
+		"scripts": "cypress run",
+		"combine-reports": "mkdir -p cypress/reports/mochareports && mochawesome-merge 'cypress/reports/mocha/*.json' > cypress/reports/mochareports/report.json",
+		"generate-report": "mkdir -p cypress/reports/mochareports && marge cypress/reports/mochareports/report.json -f report -o cypress/reports/mochareports --inline",
+		"posttest": "npm run combine-reports && npm run generate-report",
+		"test": "npm run cy:run:chrome -- --spec 'cypress/e2e/**/*' --config excludeSpecPattern='**/a11y/**/*' || npm run posttest",
+		"test:a11y": "npm run cy:run:chrome -- --spec 'cypress/e2e/a11y/**/*' || npm run posttest"
+	},
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"@testing-library/cypress": "^10.1.0",
+		"axe-core": "^4.11.1",
+		"axe-html-reporter": "^2.2.11",
+		"cypress": "^15.7.0",
+		"cypress-axe": "^1.7.0",
+		"cypress-ctrf-json-reporter": "^0.0.13",
+		"cypress-multi-reporters": "^2.0.5",
+		"cypress-plugin-tab": "^1.0.5",
+		"mochawesome": "^7.1.4",
+		"mochawesome-merge": "^5.1.0",
+		"mochawesome-report-generator": "^6.3.2"
+	},
+	"dependencies": {
+		"cypress-real-events": "^1.15.0",
+		"marge": "^1.0.1",
+		"zod": "^4.3.5"
+	}
 }
