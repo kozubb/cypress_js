@@ -1,6 +1,6 @@
 import testData from '../../fixtures/SauceDemo/TestData'
 
-it('Login Page Accessibility Audit @a11y', () => {
+it('Login Page Accessibility Audit', () => {
 	// Navigate to the application endpoint defined in test data
 	cy.visit(testData.Endpoint)
 

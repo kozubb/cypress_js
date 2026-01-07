@@ -3,7 +3,7 @@ import { A11yPage } from '../../pages/SauceDemo/AccessibilityKeys'
 import testData from '../../fixtures/SauceDemo/TestData'
 import LoginPage from '../../pages/SauceDemo/Login'
 
-describe('SauceDemo - Keyboard Navigation & A11y Login Flow @a11y', () => {
+describe('SauceDemo - Keyboard Navigation & A11y Login Flow', () => {
 	// Initialize Page Objects
 	const login = new LoginPage()
 	const productListing = new ProductListing()
@@ -18,7 +18,7 @@ describe('SauceDemo - Keyboard Navigation & A11y Login Flow @a11y', () => {
 		cy.visit(testData.Endpoint)
 	})
 
-	it('Login as a valid user using keyboard @a11y', () => {
+	it('Login as a valid user using keyboard', () => {
 		// Step 2: Perform login with standard user credentials using keyboard navigation
 		navigate.navigateToNextElement()
 		navigate.assertFocusedElement(loginInput)
