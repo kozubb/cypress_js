@@ -5,7 +5,7 @@ import ProductListing from '../../pages/SauceDemo/ProductListing'
 const productListing = new ProductListing()
 const login = new LoginPage()
 
-it('Login Page Accessibility Audit', () => {
+it('Product Listing Page Accessibility Audit', () => {
 	// Navigate to product listing page
 	cy.visit(testData.Endpoint)
 
