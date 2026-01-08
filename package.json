@@ -23,6 +23,7 @@
 		"cypress": "^15.7.0",
 		"cypress-axe": "^1.7.0",
 		"cypress-ctrf-json-reporter": "^0.0.13",
+		"cypress-image-snapshot": "^4.0.1",
 		"cypress-multi-reporters": "^2.0.5",
 		"cypress-plugin-tab": "^1.0.5",
 		"mochawesome": "^7.1.4",

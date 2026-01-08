@@ -17,5 +17,10 @@
 import './commands'
 import 'cypress-plugin-tab'
 import 'cypress-axe'
+import { addMatchImageSnapshotCommand } from 'cypress-image-snapshot/command'
+addMatchImageSnapshotCommand({
+	failureThreshold: Cypress.env('imageSnapshot')?.failureThreshold ?? 0.03,
+	failureThresholdType: Cypress.env('imageSnapshot')?.failureThresholdType ?? 'percent'
+})
 import '@testing-library/cypress/add-commands'
 import './cyLogCustomStyles'

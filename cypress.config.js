@@ -1,11 +1,22 @@
 const { defineConfig } = require('cypress')
 const { GenerateCtrfReport } = require('cypress-ctrf-json-reporter')
 const { createHtmlReport } = require('axe-html-reporter')
+const { addMatchImageSnapshotPlugin } = require('cypress-image-snapshot/plugin')
 const fs = require('fs')
 
 module.exports = defineConfig({
 	e2e: {
 		specPattern: 'cypress/e2e/**/*.cy.js',
+		viewportWidth: 1280,
+		viewportHeight: 800,
+
+		env: {
+			imageSnapshot: {
+				failureThreshold: 0.03,
+				failureThresholdType: 'percent'
+			}
+		},
+
 		experimentalMemoryManagement: true,
 		trashAssetsBeforeRuns: false,
 		retries: {
@@ -36,10 +47,11 @@ module.exports = defineConfig({
 				mochaFile: 'cypress/reports/test-results-[hash].xml'
 			}
 		},
+
 		setupNodeEvents(on, config) {
-			new GenerateCtrfReport({
-				on
-			})
+			addMatchImageSnapshotPlugin(on, config)
+
+			new GenerateCtrfReport({ on })
 
 			on('task', {
 				generateAxeReport({ results, projectKey, fileName }) {
@@ -52,7 +64,7 @@ module.exports = defineConfig({
 						createHtmlReport({
 							results,
 							options: {
-								projectKey: projectKey,
+								projectKey,
 								outputDir: reportDir,
 								reportFileName: `${fileName}.html`
 							}
