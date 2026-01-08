@@ -1,7 +1,7 @@
 const { defineConfig } = require('cypress')
 const { GenerateCtrfReport } = require('cypress-ctrf-json-reporter')
 const { createHtmlReport } = require('axe-html-reporter')
-const { addMatchImageSnapshotPlugin } = require('cypress-image-snapshot/plugin')
+const { addMatchImageSnapshotPlugin } = require('@simonsmith/cypress-image-snapshot/plugin')
 const fs = require('fs')
 
 module.exports = defineConfig({
