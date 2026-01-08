@@ -8,6 +8,7 @@ This project demonstrates an end-to-end (E2E) testing framework using **Cypress*
 - **API testing**: testing GET, POST, PUT, and DELETE requests.
 - **Contract Testing with Zod**: testing GET requests using Zod library.
 - **Accessibility (a11y) Audits**: tests are using cypress axe library library to ensure **WCAG 2.1** compliance and generate reports.
+- **Visual Regression Testing**: utilizes pixel-by-pixel comparison to detect UI inconsistencies, layout shifts, and styling issues across critical user journeys.
 - **Cross-browser testing**: tests are run on **Chrome**.
 - **CI/CD pipeline**: integrated fully with **GitHub Actions**, including test execution and reporting.
 
@@ -44,6 +45,16 @@ This project demonstrates an end-to-end (E2E) testing framework using **Cypress*
 - Automated scans using cypress axe library to ensure **WCAG 2.1** compliance.
 - Custom logic to generate visual **HTML reports** whenever violations are detected.
 - Navigation using keyboard keys
+
+### Visual Regression Testing
+
+- Automated UI comparison for [Sauce Demo](https://www.saucedemo.com).
+- Captures and compares screenshots of critical steps:
+  - Login page states (initial vs. filled).
+  - Validation error messages.
+  - Full-page inventory grid (with real images).
+  - Checkout flow and order summaries.
+- Ensures pixel-perfect consistency.
 
 ### **Cross-Browser Testing**:
 
@@ -104,8 +115,15 @@ This project integrates automated accessibility audits to ensure compliance with
   accessibility guidelines and allow moving through the application without a mouse.
 - Build can be run manually in Github Actions
 - **Reporting:** - If violations are found, a detailed **HTML Report** is generated.
+
   - Reports are saved as **GitHub Action Artifacts**.
   - Custom console logging provides immediate feedback on the number of violations.
+
+## 📸 Visual Regression Testing
+
+- **Goal**: Detect pixel-level layout shifts, styling bugs.
+- **Pixel Perfection**: No masking used to ensure 100% accuracy of product images and prices.
+- **Source of Truth**: Snapshots are managed via GitHub Actions to match the Linux CI environment.
 
 ---
 
@@ -162,9 +180,16 @@ Chrome is selected as the primary browser because:
 - The tested applications do not require multi-tab workflows
 - The goal is **fast, stable feedback**, not exhaustive browser coverage
 
-## Future Goals
+## In progress
+
+- Implement **accessibility (a11y) tests** to ensure compliance with accessibility standards WCAG - it will be done using axe library for playwright
+- Implement **visual regression tests** to detect UI changes automatically
 
 - Implement **visual regression tests** to detect UI changes automatically
+
+## Future Goals
+
+- To provide a comprehensive quality assurance ecosystem that validates functional correctness, API integrity, and UI consistency, while actively monitoring web performance and accessibility to ensure a seamless, high-speed user experience.
 
 ---
 
