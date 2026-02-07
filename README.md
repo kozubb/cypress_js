@@ -19,7 +19,6 @@ This project demonstrates an end-to-end (E2E) testing framework using **Cypress*
 ### **Frontend Tests**:
 
 1. **QA Brains**
-
    - Existing frontend tests for the QA Brains website.
    - Includes login, registration, and product purchase flows.
    - Implemented using **Page Object Pattern** for maintainability and clarity.
@@ -31,6 +30,14 @@ This project demonstrates an end-to-end (E2E) testing framework using **Cypress*
      - Adding products to the cart
      - Complete order placement process (checkout and confirmation)
    - Implemented using **Page Object Pattern** for maintainability and clarity.
+
+### API + UI Mixed Tests
+
+- This test demonstrates an end-to-end scenario in the QuickPizza application, covering both API and UI interactions:
+- CSRF Token requested from the backend before any user action.
+- The token is extracted from the Set-Cookie header to secure subsequent API requests.
+- User Authentication via API - the returned userToken is added to browser cookies to simulate an authenticated session.
+- UI Interactions as a logged in user
 
 ### **API Tests**:
 
@@ -93,6 +100,13 @@ The project follows a **balanced testing pyramid approach**.
 - Avoid over-testing UI details
 - Written with **stability and readability** in mind
 
+### API + UI Mixed Test
+
+- Automates the pizza rating flow from login to UI interaction
+- Login via API for faster and more reliable authentication
+- Uses CSRF token and qp_user_token for authenticated requests
+- Ensures stable end-to-end coverage for a critical user flow
+
 ### API Tests
 
 - Faster and more reliable than UI tests
@@ -102,7 +116,6 @@ The project follows a **balanced testing pyramid approach**.
 ### API Contract Testing
 
 - **Contract Testing with Zod**:
-
   - Implementation of **Schema Validation** to ensure API responses match expected structures.
   - Validating data types, mandatory fields, and nested objects (e.g., address and company details).
 
@@ -115,7 +128,6 @@ This project integrates automated accessibility audits to ensure compliance with
   accessibility guidelines and allow moving through the application without a mouse.
 - Build can be run manually in Github Actions
 - **Reporting:** - If violations are found, a detailed **HTML Report** is generated.
-
   - Reports are saved as **GitHub Action Artifacts**.
   - Custom console logging provides immediate feedback on the number of violations.
 
